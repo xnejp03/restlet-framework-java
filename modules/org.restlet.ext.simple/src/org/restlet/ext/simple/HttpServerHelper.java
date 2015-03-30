@@ -40,10 +40,10 @@ import org.restlet.Server;
 import org.restlet.data.Protocol;
 import org.restlet.ext.simple.internal.SimpleContainer;
 import org.restlet.ext.simple.internal.SimpleServer;
-import org.simpleframework.transport.connect.Connection;
-import org.simpleframework.transport.connect.SocketConnection;
 import org.simpleframework.http.core.Container;
 import org.simpleframework.http.core.ContainerServer;
+import org.simpleframework.transport.connect.Connection;
+import org.simpleframework.transport.connect.SocketConnection;
 
 /**
  * Simple HTTPS server connector.
@@ -88,7 +88,7 @@ public class HttpServerHelper extends SimpleServerHelper {
         Container container = new SimpleContainer(this);
         ContainerServer server = new ContainerServer(container,
                 getDefaultThreads());
-        SimpleServer restletServer = new SimpleServer(server);
+        SimpleServer restletServer = new SimpleServer(server, getOutboundBufferSize(), getInboundBufferSize());
         Connection connection = new SocketConnection(restletServer);
 
         setConfidential(false);

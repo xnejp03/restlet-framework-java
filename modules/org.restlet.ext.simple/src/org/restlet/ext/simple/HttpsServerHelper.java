@@ -119,7 +119,7 @@ public class HttpsServerHelper extends SimpleServerHelper {
         Container container = new SimpleContainer(this);
         ContainerServer server = new ContainerServer(container,
                 getDefaultThreads());
-        SimpleServer filter = new SimpleServer(server);
+        SimpleServer filter = new SimpleServer(server, getOutboundBufferSize(), getInboundBufferSize());
         Connection connection = new SocketConnection(filter);
         setConfidential(true);
         setContainerServer(server);

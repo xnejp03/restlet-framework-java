@@ -34,6 +34,7 @@
 package org.restlet.ext.simple.internal;
 
 import java.io.IOException;
+import java.net.StandardSocketOptions;
 import java.nio.channels.SocketChannel;
 import java.util.Map;
 
@@ -57,12 +58,17 @@ public class SimpleServer implements Server {
      * This is the server to be used.
      */
     private final Server server;
+    
+    private final Integer outboundBufferSize;
+    private final Integer inboundBufferSize;
 
     /**
      * Constructor.
      */
-    public SimpleServer(Server server) {
+    public SimpleServer(Server server, Integer outboundBufferSize, Integer inboundBufferSize) {
         this.server = server;
+        this.inboundBufferSize = inboundBufferSize;
+        this.outboundBufferSize = outboundBufferSize;
     }
 
     /**
@@ -78,6 +84,9 @@ public class SimpleServer implements Server {
         SSLEngine engine = socket.getEngine();
         SocketChannel channel = socket.getChannel();
 
+        channel.setOption(StandardSocketOptions.SO_SNDBUF, outboundBufferSize);    
+        channel.setOption(StandardSocketOptions.SO_RCVBUF, inboundBufferSize);
+        
         map.put(PROPERTY_ENGINE, engine);
         map.put(PROPERTY_SOCKET, channel);
 
