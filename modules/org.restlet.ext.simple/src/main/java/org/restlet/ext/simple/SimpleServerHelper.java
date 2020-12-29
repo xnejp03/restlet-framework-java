@@ -130,6 +130,16 @@ public abstract class SimpleServerHelper extends HttpServerHelper {
                 "defaultThreads", "5"));
     }
 
+    public int getOutboundBufferSize() {
+        return Integer.parseInt(getHelpedParameters().getFirstValue(
+                "outboundBufferSize", "8192"));
+    }
+
+    public int getInboundBufferSize() {
+        return Integer.parseInt(getHelpedParameters().getFirstValue(
+                "inboundBufferSize", "8192"));
+    }
+
     /**
      * Indicates if this service is acting in HTTP or HTTPS mode.
      * 
